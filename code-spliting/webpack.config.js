@@ -1,5 +1,7 @@
 var path = require('path');
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
   mode: 'none',
@@ -9,7 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   devServer : {
-    port : 9000
+    port : 9001
   },
   module: {
     rules: [
@@ -23,6 +25,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin()  
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      // index.html 템플릿을 기반으로 빌드 결과물을 추가해줌
+      template: 'index.html',
+    }),
 ],
 }
