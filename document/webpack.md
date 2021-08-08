@@ -15,3 +15,57 @@
 - Dynamic Loading(Hot loading) & Lazy Loading 미지원
 
 
+## 웹팩의 주요 속성 
+
+- entry : 빌드를 할 대상을 정의
+- output : 빌드를 하고 난 후 결과물을 정의
+- loader(module) : entry -> output으로 빌드 할 때 적용될 속성
+- plugin : 결과물의 형태를 변환
+
+``` js
+
+var path = require('path');
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = {
+  mode: 'none', // production , development, none
+  entry: './index.js', // webpack으로 빌드할 대상
+  output: { // webpack으로 빌드 후 생성될 대상 
+    filename: 'bundle.js', // [chunkhash] 가능  
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: { // js 빌드할 때 사용할 라이브러리 정의 
+    rules: [    
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },  // plugin 사용
+          "css-loader"
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin()    // plugin 정의 
+  ],
+} 
+
+
+```
+
+
+## 웹팩 DEV 
+
+- 웹팩의 빌드 대상이 변경되었을 떄 다시 빌드 하지 않아도 자동으로 빌드 시켜주는 도구.
+
+``` npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D ```
+
+
+
+```
+"script" : {
+  "dev" : "webpack-dev-server",
+  "build" : "webpack"
+}
+
+```
